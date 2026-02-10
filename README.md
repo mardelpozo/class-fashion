@@ -27,6 +27,8 @@ This project evaluates two approaches for classifying the Fashion-MNIST dataset 
 
 Both models are trained and evaluated on identical data splits using the same evaluation framework to ensure a fair comparison.
 
+**[Link to the full Project Report](https://docs.google.com/document/d/1b2JRdbFP9S2gFHHpQ_w2qg8owEokxOnyNN-XVHv8IHk/edit?usp=sharing)**
+
 ---
 
 ## Dataset
@@ -121,9 +123,11 @@ Classes with distinct silhouette shapes (such as footwear, bags, and trousers) e
 This repository contains a **single Jupyter notebook** that implements the complete workflow:
 
 ```text
-├── fashion.ipynb #Reproducible notebook
-├── environment.yml #Conda environment file
-└── README.md #This file
+├── figures/ # Exported PNGs used in the report (run the notebook)
+├── fashion.ipynb # Reproducible notebook
+├── environment.yml # Conda environment configuration
+├── README.md
+└── .gitignore
 ```
 
 ---
