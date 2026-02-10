@@ -1,6 +1,9 @@
 # Fashion-MNIST Image Classification: CNN vs Random Forest
 
-A comparative computer vision project evaluating a Convolutional Neural Network (CNN) and a Random Forest classifier on the Fashion-MNIST dataset. The project analyzes classification performance, training cost, and class-level failure modes in order to recommend an appropriate model under different operational constraints.
+A comparative study evaluating a convolutional neural network (CNN) and a Random Forest classifier on the Fashion-MNIST dataset.  
+
+The project analyzes differences in classification accuracy, training time, and class-level error behavior under a controlled experimental setup.
+
 
 ---
 
@@ -19,27 +22,24 @@ A comparative computer vision project evaluating a Convolutional Neural Network 
 
 ## Project Overview
 This project evaluates two approaches for classifying the Fashion-MNIST dataset into 10 clothing categories:
-1) Convolutional Neural Network (tensorflow/keras)
-2) Random Forest Classifier (scikit-learn).
+1) A **Convolutional Neural Network (CNN)**, designed to utilize spatial structures in image data.
+2) A **Random Forest (RF)** classifier, trained on feature vector flattened pixel representations.
 
-The goal is to compare performance, training time, and failure modes, to later recommend a model for production use.
-
-**Objective:**  
-To evaluate both approaches in terms of:
-- classification accuracy
-- training time
-- error analysis per class
+Both models are trained and evaluated on identical data splits using the same evaluation framework to ensure a fair comparison.
 
 ---
 
 ## Dataset
 - **Dataset:** Fashion-MNIST  
-- **Samples:**  
-  - Training: 60,000 images  
-  - Test: 10,000 images  
-- **Image format:** 28×28 grayscale  
+- **Images:** 70,000 grayscale images  
+- **Resolution:** 28 × 28 pixels  
+- **Split:**  
+  - 60,000 training images  
+  - 10,000 test images  
 - **Classes (10):**  
-  T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot
+  T-Shirt/Top, Trouser, Pullover, Dress, Coat, Sandals, Shirt, Sneaker, Bag, Ankle boots
+
+The dataset presents particular difficulty for visually similar upper-body garments (e.g., shirt, pullover, coat), making it suitable for evaluating fine-grained visual classification performance.
 
 ---
 
@@ -48,18 +48,20 @@ To evaluate both approaches in terms of:
 ### Models
 
 **1. Convolutional Neural Network (CNN)**  
-- Framework: TensorFlow / Keras  
+- Framework: **TensorFlow / Keras**
 - Architecture:
-  - Two convolutional blocks (`Conv2D` + `MaxPooling`)
-  - Dense classifier  
+  - Two convolutional layers:
+    - `Conv2D` with ReLU activation 
+    - `MaxPooling`
+  - Fully connected dense layers for classification  
 - Input: normalized images with shape `(28, 28, 1)` 
 - Optimizer: Adam  
 - Loss: Sparse Categorical Crossentropy  
-- Epochs: 10  
+- Epochs: **10**
 
 **2. Random Forest Classifier**  
-- Framework: scikit-learn  
-- Input: flattened normalized pixel values (784 features)  
+- Framework: **scikit-learn**  
+- Input: flattened normalized pixel values (784-dimensional feature vectors)  
 - Parameters: 
   - `n_estimators=100`
   - `criterion='entropy'`
@@ -67,11 +69,13 @@ To evaluate both approaches in terms of:
 
 ### Evaluation
 
-The evaluation strategy comprised the following:
-- Test accuracy
-- Confusion matrices
-- Per-class precision and recall
+Model performance is evaluated using:
+- Overall classification accuracy
 - Training time
+- Confusion matrices (training and test sets)
+- Per-class precision and recall
+
+All experiments are executed in the same computational environment to ensure comparability.
 
 ---
 
@@ -84,7 +88,12 @@ The evaluation strategy comprised the following:
   - Test accuracy: **87.53%**
   - Training time: **17.33 s**
 
-The CNN achieves higher accuracy, particularly for visually similar garment categories, at the cost of significantly longer training time.
+Key observations:
+- The CNN achieves higher classification accuracy, particularly for visually similar garment categories.
+- The Random Forest trains substantially faster but exhibits stronger class confusion on the test set.
+- The Random Forest achieves perfect accuracy on the training set, indicating overfitting.
+
+Detailed results, including confusion matrices and classification reports, are documented in the notebook.
 
 ---
 
@@ -92,7 +101,7 @@ The CNN achieves higher accuracy, particularly for visually similar garment cate
 
 The most frequent misclassifications for both models occur among upper-body garments with similar silhouettes:
 - Shirt 
-- T-shirt/top  
+- T-Shirt/Top  
 - Pullover  
 - Coat
 
@@ -112,33 +121,40 @@ Classes with distinct silhouette shapes (such as footwear, bags, and trousers) e
 This repository contains a **single Jupyter notebook** that implements the complete workflow:
 
 ```text
-├── fashion.ipynb
-├── environment.yml
-└── README.md
+├── fashion.ipynb #Reproducible notebook
+├── environment.yml #Conda environment file
+└── README.md #This file
 ```
 
 ---
 
 ## Reproducibility
-### Environment
-This project was developed using:
-- `python=3.11`
-- `tensorflow=2.20.0`
-- `keras=3.13.2`
-- `scikit-learn
-- CPU-only (no GPU)
 
-To recreate the environment:
+To reproduce results:
+
+1. Clone the repository:
+```
+git clone https://github.com/mardelpozo/class-fashion.git
+```
+2. Recreate the environment:
 ```
 conda env create -f environment.yml
 conda activate class-fashion
 ```
 
-### Setup
-Launch Jupyter and run `fashion.ipynb`:
+3. Launch Jupyter and run `fashion.ipynb`:
 ```
 jupyter lab
 ```
+
+### Environment
+This project was developed using:
+- `python=3.11`
+- `tensorflow=2.20.0`
+- `keras=3.13.2`
+- `scikit-learn`
+- Jupyter Lab
+- CPU-only (no GPU)
 
 ## References
 

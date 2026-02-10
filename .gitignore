@@ -22,3 +22,6 @@ venv/
 # --- PyCharm / IDE ---
 .idea/
 .vscode/
+
+# --- Figures ---
+figures/
